@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("fakeDao")
@@ -20,5 +21,12 @@ public class FakeMovieDataAccessService implements MovieDao {
     @Override
     public List<Movie> selectAllMovie() {
         return DB;
+    }
+
+    @Override
+    public Optional<Movie> selectMovieByID(UUID id) {
+        return DB.stream()
+                .filter(movie -> movie.getId().equals(id))
+                .findFirst();
     }
 }

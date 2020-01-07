@@ -3,6 +3,7 @@ package com.rendyfebry.movieapi.movieapi.dao;
 import com.rendyfebry.movieapi.movieapi.model.Movie;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface MovieDao {
@@ -14,4 +15,6 @@ public interface MovieDao {
     }
 
     List<Movie> selectAllMovie();
+
+    Optional<Movie> selectMovieByID(UUID id);
 }
