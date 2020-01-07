@@ -18,7 +18,7 @@ public class MovieController {
     @Value("${app.apiKey}")
     String apiKey;
 
-    @GetMapping(path = "{id}")
+    @GetMapping(path = "{id}", produces = "application/json")
     public String getMovieById(@PathVariable("id") String id) {
         String url = apiURL + "/movie/" + id + "?language=en-US&api_key=" + apiKey;
         return restTemplate.getForObject(url, String.class);
