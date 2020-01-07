@@ -1,0 +1,3 @@
+app:
+  apiURL: https://api.themoviedb.org/3
+  apiKey: a09328ab8b95f1905254a886e997f176

@@ -1,38 +1,31 @@
 package com.rendyfebry.movieapi.movieapi.api;
 
-import com.rendyfebry.movieapi.movieapi.model.Movie;
-import com.rendyfebry.movieapi.movieapi.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.UUID;
+import org.springframework.web.client.RestTemplate;
 
 @RequestMapping("/2.0/movie")
 @RestController
 public class MovieController {
-    private final MovieService movieService;
-
     @Autowired
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
+    RestTemplate restTemplate;
 
-    @PostMapping
-    public void addMovie(@Valid @NotNull @RequestBody Movie movie) {
-        movieService.addMovie(movie);
-    }
+    @Value("${app.apiURL}")
+    String apiURL;
 
-    @GetMapping
-    public List<Movie> getAllMovie() {
-        return movieService.getAllMovie();
-    }
+    @Value("${app.apiKey}")
+    String apiKey;
 
     @GetMapping(path = "{id}")
-    public Movie getMovieById(@PathVariable("id") UUID id) {
-        return movieService.getMovieById(id)
-                .orElse(null);
+    public String getMovieById(@PathVariable("id") String id) {
+        String url = apiURL + "/movie/" + id + "?language=en-US&api_key=" + apiKey;
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    @Bean
+    public RestTemplate rest() {
+        return new RestTemplate();
     }
 }
