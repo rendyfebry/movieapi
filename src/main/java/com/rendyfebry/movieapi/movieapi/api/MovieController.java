@@ -5,6 +5,8 @@ import com.rendyfebry.movieapi.movieapi.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RequestMapping("/2.0/movie")
@@ -18,7 +20,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public void addMovie(@RequestBody Movie movie) {
+    public void addMovie(@Valid @NotNull @RequestBody Movie movie) {
         movieService.addMovie(movie);
     }
 
